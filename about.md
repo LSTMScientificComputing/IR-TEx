@@ -20,11 +20,10 @@ Locate R Studio on your machine, and run the software. Click File -> Open File..
 Type the following into the R command line (as indicated by > and a flashing cursor line)
 
 *install.packages('shiny')
-*install.packages('rgdal')
-*install.packages('dismo')
+*install.packages('ggmap')
+*install.packages('mapproj')
 *install.packages('shinycssloaders')
 *install.packages('shinythemes')
-*install.packages('WGCNA')
 
 After these files have installed, click 'Run App' under the IR-TEx tab. One the app is running, click 'Open in Browser' for full functionality.
 
