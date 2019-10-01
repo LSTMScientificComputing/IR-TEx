@@ -1,11 +1,8 @@
 library(shiny)
-library(dismo)
 library(shinythemes)
 library(shinycssloaders)
-library(WGCNA)
-
-enableWGCNAThreads()
-allowWGCNAThreads()
+library(ggmap)
+library(mapproj)
 
 #Read in the data from the same local folder as the app.R file
 fold.change.data<-read.delim('Fold Changes.txt',header=T)
@@ -32,7 +29,7 @@ ui <- fluidPage(
 					checkboxGroupInput('ExposureInput','Select Exposure Status',c('Exposed','Unexposed'),selected=c('Exposed','Unexposed')),
 					checkboxGroupInput('SpeciesInput','Select Relevant Species',c('Anopheles gambiae','Anopheles coluzzi','Anopheles arabiensis'),selected = c('Anopheles coluzzi')),
 					checkboxGroupInput('InsecticideInput','Select Insecticide Class',c('Pyrethroid','Organochloride','Carbamate','None'),selected = c('Pyrethroid','None')),
-					sliderInput('CorrNumberInput','Absolute Correlation Value',min=0.6,max=1,step=0.01,value=c(0.98,1)),
+					sliderInput('CorrNumberInput','Absolute Correlation Value',min=0.6,max=1,step=0.01,value=0.98),
 					submitButton("Update View", icon("refresh"))
 				),
 
@@ -365,7 +362,7 @@ server <- function(input, output) {
     gene.names<-expr3[-c(1:4),1]
     expression<-expr4[,1:((ncol(expr2)/2))]
     mode(expression)<-'numeric'
-    cor.matrix<-WGCNA::cor(t(expression), nThreads= 15)
+    cor.matrix<-cor(t(expression)) 
     
     
   })
@@ -584,15 +581,21 @@ server <- function(input, output) {
     
     new.geography<-cbind(new.geography,rep('Africa',length(names)))
     colnames(new.geography)<-c('Longitude','Latitude','Country')
+    new_geography = as.data.frame(new.geography)
+    
+    #map = get_map(c(top = 35.76727, bottom = -34.53215, left = -17.47581, right = 51.0773),scale = 2)
+    map = get_map(c(top = (max(new_geography$Latitude)+5), bottom = (min(new_geography$Latitude)-5), left = (min(new_geography$Longitude)-5), right = (max(new_geography$Longitude)+5)),scale = 2)
+    colours2=sort(unique(colours),decreasing=F)
+    
+    ggmap(map) +  geom_point(data=new_geography,aes(x=Longitude,y=Latitude, color = colours, size=0.5)) + scale_colour_manual(name = "colours",values = colours2) + theme(legend.position="none")
     
     
+   # coordinates(new.geography)<-c('Longitude','Latitude')
     
-    coordinates(new.geography)<-c('Longitude','Latitude')
-    
-    gbmap<-gmap(new.geography,type='roadmap')
-    new.geography.merc <- Mercator(new.geography)
-    plot(gbmap)
-    points(new.geography.merc,pch=21,bg=colours,cex=2)
+    #gbmap<-gmap(new.geography,type='roadmap')
+    #new.geography.merc <- Mercator(new.geography)
+    #plot(gbmap)
+    #points(new.geography.merc,pch=21,bg=colours,cex=2)
 
   })
   
