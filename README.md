@@ -20,8 +20,8 @@ Locate R Studio on your machine, and run the software. Click File -> Open File..
 Type the following into the R command line (as indicated by > and a flashing cursor line)
 
 install.packages('shiny')
-install.packages('rgdal')
-install.packages('dismo')
+install.packages('ggmap')
+install.packages('mapproj')
 install.packages('shinycssloaders')
 install.packages('shinythemes')
 
