@@ -16,13 +16,15 @@ Download the .zip file containing the following: IR-TEx.R, Fold Changes.txt and 
 
 Locate R Studio on your machine, and run the software. Click File -> Open File... and locate the IR-TEx.R file that you have unzipped.
 
-**On the first run ONLY** 
+**On the first run ONLY**
 Type the following into the R command line (as indicated by > and a flashing cursor line)
 
+~~~~
 install.packages('shiny')
 install.packages('ggmap')
 install.packages('mapproj')
 install.packages('shinycssloaders')
 install.packages('shinythemes')
+~~~~
 
 After these files have installed, click 'Run App' under the IR-TEx tab. One tha app is running, click 'Open in Browser' for full functionality.
