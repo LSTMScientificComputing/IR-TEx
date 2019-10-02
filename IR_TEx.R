@@ -405,7 +405,7 @@ server <- function(input, output) {
       
       validate(need(!is.na(((expr.for.plot[which(expr.for.plot[,1]==input$textInput[1])[1],grep('FC',colnames(expr.for.plot))]))),'Please Check Inputs - (1) Ensure transcript ID is entered (e.g ending in -RA) (2) Transcript ID may not be available on the microarray (3) No microarray datasets match selection criteria. Please Try Again.'))
       
-      mp<-plot(log2(as.numeric(expr.for.plot[which(expr.for.plot[,1]==input$textInput[1])[1],grep('FC',colnames(expr.for.plot))])),ylab='Log2 Fold Change',xlab='',type='b',axes=T,xaxt='n')
+      mp<-plot(log2(as.numeric(expr.for.plot[which(expr.for.plot[,1]==input$textInput[1])[1],grep('FC',colnames(expr.for.plot))])),ylab='Log2 Fold Change',xlab='',type='b',axes=T,xaxt='n',main='Log2 Fold Change in Each Dataset')
     
       axis(1,at=1:number,labels=FALSE)
       text(x=seq(1,length(names),by=1), par("usr")[3],labels = names, srt = 35, pos = 1,offset = 2.25, xpd = TRUE,cex=1)
@@ -640,7 +640,7 @@ server <- function(input, output) {
     colours.for.graph<-c(colours.for.graph)
     
     #Plot output.
-    plot(1:ncol(expr3),1:ncol(expr3),col=colours.for.graph[1],axes=T,ylim=c(-10,10),xlim=c(1,(ncol(expr3)/2)),type='n',ylab='Log2 Fold Change',xlab='',xaxt='n')
+    plot(1:ncol(expr3),1:ncol(expr3),col=colours.for.graph[1],axes=T,ylim=c(-10,10),xlim=c(1,(ncol(expr3)/2)),type='n',ylab='Log2 Fold Change',xlab='',xaxt='n',main='Correlated expression in other transcripts')
     
     box()
     for(i in 1:length(hubs))
